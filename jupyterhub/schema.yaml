@@ -2568,6 +2568,17 @@ properties:
             type: [string, "null"]
             description: |
               A class name of the storage used by Jenkins in SchedulableNotebook.
+      home:
+        type: object
+        properties:
+          storage:
+            type: [string, "null"]
+            description: |
+              A size of the storage used by home directory in SchedulableNotebook.
+          storageClassName:
+            type: [string, "null"]
+            description: |
+              A class name of the storage used by home directory in SchedulableNotebook.
 
   ingress:
     type: object

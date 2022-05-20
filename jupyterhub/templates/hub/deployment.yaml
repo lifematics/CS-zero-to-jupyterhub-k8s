@@ -79,6 +79,9 @@ spec:
         - name: jenkins-dir
           persistentVolumeClaim:
             claimName: jenkins-settings-dir
+        - name: home-dir
+          persistentVolumeClaim:
+            claimName: schedulable-notebook-home-dir
         {{- end }}
       {{- if .Values.rbac.enabled }}
       serviceAccountName: {{ include "jupyterhub.hub.fullname" . }}
@@ -157,6 +160,8 @@ spec:
               mountPath: /var/secrets
             - name: jenkins-dir
               mountPath: /home/jovyan/.jenkins
+            - name: home-dir
+              mountPath: /home/jovyan/
           ports:
           - containerPort: 8888
             protocol: TCP
