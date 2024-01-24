@@ -349,19 +349,28 @@ c.KubeSpawner.volume_mounts.extend(
     get_config("singleuser.storage.extraVolumeMounts", [])
 )
 
-c.JupyterHub.services = [
-    {
+c.JupyterHub.services = []
+
+
+if get_config("usersExporter.enabled", False):
+    c.JupyterHub.services.append(
+        {
         "name": "users-exporter",
         "admin": True,
         "api_token": get_secret_value(f"hub.services.users-exporter.apiToken"),
-    },
-    {
-        "name": "schedulable-notebook",
-        "admin": True,
-        "url": "http://schedulable-notebook:8888",
-        "api_token": get_secret_value(f"hub.services.schedulable-notebook.apiToken"),
-    },
-]
+        }
+    )
+
+if get_config("schedulableNotebook.enabled", False):
+    c.JupyterHub.services.append(
+        {
+            "name": "schedulable-notebook",
+            "admin": True,
+            "url": "http://schedulable-notebook:8888",
+            "api_token": get_secret_value(f"hub.services.schedulable-notebook.apiToken"),
+        },
+    )
+
 
 if get_config("cull.enabled", False):
     cull_cmd = ["python3", "-m", "jupyterhub_idle_culler"]
