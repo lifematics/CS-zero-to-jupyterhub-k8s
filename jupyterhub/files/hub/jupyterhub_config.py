@@ -360,20 +360,28 @@ c.KubeSpawner.volume_mounts.extend(
     get_config("singleuser.storage.extraVolumeMounts", [])
 )
 
-c.JupyterHub.services = [
-    {
+c.JupyterHub.services = []
+
+
+if get_config("usersExporter.enabled", False):
+    c.JupyterHub.services.append(
+        {
         "name": "users-exporter",
         "admin": True,
         "api_token": get_secret_value(f"hub.services.users-exporter.apiToken"),
-    },
-    {
-        "name": "schedulable-notebook",
-        "admin": True,
-        "url": "http://schedulable-notebook:8888",
-        "api_token": get_secret_value(f"hub.services.schedulable-notebook.apiToken"),
-    },
-]
-c.JupyterHub.load_roles = []
+        }
+    )
+
+if get_config("schedulableNotebook.enabled", False):
+    c.JupyterHub.services.append(
+        {
+            "name": "schedulable-notebook",
+            "admin": True,
+            "url": "http://schedulable-notebook:8888",
+            "api_token": get_secret_value(f"hub.services.schedulable-notebook.apiToken"),
+        },
+    )
+
 
 # jupyterhub-idle-culler's permissions are scoped to what it needs only, see
 # https://github.com/jupyterhub/jupyterhub-idle-culler#permissions.
