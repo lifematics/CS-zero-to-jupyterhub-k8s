@@ -32,6 +32,8 @@ imagePullSecrets: []
 # the proxy pod.
 hub:
   revisionHistoryLimit:
+  rollout:
+    autoPromotionEnabled: true
   config:
     JupyterHub:
       admin_access: true
