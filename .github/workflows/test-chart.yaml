@@ -291,9 +291,9 @@ jobs:
           cd ci
 
           if [ ${{ matrix.upgrade-from }} = stable ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://hub.jupyter.org/helm-chart/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://github.com/lifematics/CS-zero-to-jupyterhub-k8s/tree/main/jupyterhub/ jupyterhub | yq e '.version' -)
           elif [ ${{ matrix.upgrade-from }} = dev ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://hub.jupyter.org/helm-chart/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://github.com/lifematics/CS-zero-to-jupyterhub-k8s/tree/main/jupyterhub/ jupyterhub | yq e '.version' -)
           else
             UPGRADE_FROM_VERSION=${{ matrix.upgrade-from }}
           fi
