@@ -196,6 +196,13 @@ properties:
     additionalProperties: false
     required: [baseUrl]
     properties:
+      rollout:
+        type: object
+        properties:
+          autoPromotionEnabled:
+            type: boolean
+            description: |
+              Whether automatic promotion is enabled or not.
       revisionHistoryLimit: &revisionHistoryLimit
         type: [integer, "null"]
         minimum: 0
