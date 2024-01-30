@@ -291,9 +291,9 @@ jobs:
           cd ci
 
           if [ ${{ matrix.upgrade-from }} = stable ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://github.com/lifematics/CS-zero-to-jupyterhub-k8s/tree/main/jupyterhub/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub | yq e '.version' -)
           elif [ ${{ matrix.upgrade-from }} = dev ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://github.com/lifematics/CS-zero-to-jupyterhub-k8s/tree/main/jupyterhub/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub | yq e '.version' -)
           else
             UPGRADE_FROM_VERSION=${{ matrix.upgrade-from }}
           fi
@@ -302,7 +302,7 @@ jobs:
           echo ""
           echo "Installing already released jupyterhub version $UPGRADE_FROM_VERSION"
 
-          helm install jupyterhub --repo https://github.com/lifematics/CS-zero-to-jupyterhub-k8s/tree/main/jupyterhub/ jupyterhub --values ../dev-config.yaml --version=$UPGRADE_FROM_VERSION ${{ matrix.upgrade-from-extra-args }}
+          helm install jupyterhub --repo https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub --values ../dev-config.yaml --version=$UPGRADE_FROM_VERSION ${{ matrix.upgrade-from-extra-args }}
 
       - name: "(Upgrade) Install helm diff"
         if: matrix.test == 'upgrade'
