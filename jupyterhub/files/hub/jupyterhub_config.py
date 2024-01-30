@@ -368,7 +368,7 @@ if get_config("usersExporter.enabled", False):
         {
         "name": "users-exporter",
         "admin": True,
-        "api_token": get_secret_value(f"hub.services.users-exporter.apiToken"),
+        "api_token": get_secret_value("hub.services.users-exporter.apiToken"),
         }
     )
 
@@ -378,7 +378,7 @@ if get_config("schedulableNotebook.enabled", False):
             "name": "schedulable-notebook",
             "admin": True,
             "url": "http://schedulable-notebook:8888",
-            "api_token": get_secret_value(f"hub.services.schedulable-notebook.apiToken"),
+            "api_token": get_secret_value("hub.services.schedulable-notebook.apiToken"),
         },
     )
 
