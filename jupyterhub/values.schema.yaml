@@ -26,6 +26,8 @@ required:
   - debug
   - rbac
   - global
+  - usersExporter
+  - schedulableNotebook
 properties:
   enabled:
     type: [boolean, "null"]
