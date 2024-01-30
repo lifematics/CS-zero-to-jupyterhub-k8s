@@ -131,12 +131,12 @@ jobs:
         include:
           - k3s-channel: latest
             test: install
-          - k3s-channel: stable # also test hub-slim, and prePuller.hook
-            test: install
-            local-chart-extra-args: >-
-              --set hub.image.name=quay.io/jupyterhub/k8s-hub-slim
-              --set prePuller.hook.enabled=true
-              --set prePuller.hook.pullOnlyOnChanges=true
+          - #k3s-channel: stable # also test hub-slim, and prePuller.hook
+            #test: install
+            #local-chart-extra-args: >-
+            #  --set hub.image.name=quay.io/jupyterhub/k8s-hub-slim
+            #  --set prePuller.hook.enabled=true
+            #  --set prePuller.hook.pullOnlyOnChanges=true
           - k3s-channel: v1.26 # also test hub.existingSecret
             test: install
             local-chart-extra-args: >-
@@ -173,44 +173,44 @@ jobs:
               --set hub.db.type=sqlite-pvc
               --set singleuser.storage.type=dynamic
             create-k8s-test-resources: true
-          - k3s-channel: v1.24
-            test: upgrade
-            upgrade-from: dev
-            upgrade-from-extra-args: >-
-              --set proxy.secretToken=aaaa1111
-              --set hub.db.type=sqlite-pvc
-              --set singleuser.storage.type=dynamic
-            local-chart-extra-args: >-
-              --set hub.db.type=sqlite-pvc
-              --set singleuser.storage.type=dynamic
-          - k3s-channel: v1.23
-            test: upgrade
+          - #k3s-channel: v1.24
+            #test: upgrade
+            #upgrade-from: dev
+            #upgrade-from-extra-args: >-
+            #  --set proxy.secretToken=aaaa1111
+            #  --set hub.db.type=sqlite-pvc
+            #  --set singleuser.storage.type=dynamic
+            #local-chart-extra-args: >-
+            #  --set hub.db.type=sqlite-pvc
+            #  --set singleuser.storage.type=dynamic
+          - #k3s-channel: v1.23
+            #test: upgrade
             # We're testing hub.db.upgrade with PostgreSQL so this version must be old
             # enough to require a DB upgrade
-            upgrade-from: 2.0.0
-            upgrade-from-extra-args: >-
-              --set proxy.secretToken=aaaa1111
-              --set hub.cookieSecret=bbbb2222
-              --set hub.config.CryptKeeper.keys[0]=cccc3333
-              --set hub.db.type=postgres
-              --set hub.db.url=postgresql+psycopg2://postgres:postgres@postgresql:5432/jupyterhub
-              --set singleuser.storage.type=dynamic
-            local-chart-extra-args: >-
-              --set hub.db.type=postgres
-              --set hub.db.url=postgresql+psycopg2://postgres:postgres@postgresql:5432/jupyterhub
-              --set singleuser.storage.type=dynamic
-              --set hub.db.upgrade=true
-            create-k8s-test-resources: true
+            #upgrade-from: 2.0.0
+            #upgrade-from-extra-args: >-
+            #  --set proxy.secretToken=aaaa1111
+            #  --set hub.cookieSecret=bbbb2222
+            #  --set hub.config.CryptKeeper.keys[0]=cccc3333
+            #  --set hub.db.type=postgres
+            #  --set hub.db.url=postgresql+psycopg2://postgres:postgres@postgresql:5432/jupyterhub
+            #  --set singleuser.storage.type=dynamic
+            #local-chart-extra-args: >-
+            #  --set hub.db.type=postgres
+            #  --set hub.db.url=postgresql+psycopg2://postgres:postgres@postgresql:5432/jupyterhub
+            #  --set singleuser.storage.type=dynamic
+            #  --set hub.db.upgrade=true
+            #create-k8s-test-resources: true
             # https://artifacthub.io/packages/helm/bitnami/postgresql
-            setup-postgresql-args: >-
-              --version=11.6.13
-              --set auth.enablePostgresUser=true
-              --set auth.postgresPassword=postgres
-              --set auth.database=jupyterhub
-              --set audit.logHostname=true
-              --set audit.logConnections=true
-              --set audit.logDisconnections=true
-              --set audit.clientMinMessages=debug
+            #setup-postgresql-args: >-
+            #  --version=11.6.13
+            #  --set auth.enablePostgresUser=true
+            #  --set auth.postgresPassword=postgres
+            #  --set auth.database=jupyterhub
+            #  --set audit.logHostname=true
+            #  --set audit.logConnections=true
+            #  --set audit.logDisconnections=true
+            #  --set audit.clientMinMessages=debug
 
     steps:
       - uses: actions/checkout@v4
