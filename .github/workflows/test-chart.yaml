@@ -383,7 +383,7 @@ jobs:
           . ./ci/common
           await_autohttps_tls_cert_acquisition
 
-      - name: Run tests
+      - name: Run testss
         continue-on-error: ${{ matrix.accept-failure == true }}
         run: |
           . ./ci/common
