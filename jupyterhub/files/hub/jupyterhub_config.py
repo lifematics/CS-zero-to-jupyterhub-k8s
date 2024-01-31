@@ -106,7 +106,7 @@ c.JupyterHub.hub_connect_url = (
     f'http://{get_name("hub")}:{get_name_env("hub", "_SERVICE_PORT")}'
 )
 
-env_url = os.environ.get('HUB_CONNECT_URL')
+env_url = os.environ.get("HUB_CONNECT_URL")
 if env_url:
     c.JupyterHub.hub_connect_url = env_url
 
@@ -366,9 +366,9 @@ c.JupyterHub.services = []
 if get_config("usersExporter.enabled", False):
     c.JupyterHub.services.append(
         {
-        "name": "users-exporter",
-        "admin": True,
-        "api_token": get_secret_value("hub.services.users-exporter.apiToken"),
+            "name": "users-exporter",
+            "admin": True,
+            "api_token": get_secret_value("hub.services.users-exporter.apiToken"),
         }
     )
 
