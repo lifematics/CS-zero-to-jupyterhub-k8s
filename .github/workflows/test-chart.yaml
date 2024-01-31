@@ -172,16 +172,17 @@ jobs:
               --set hub.db.type=sqlite-pvc
               --set singleuser.storage.type=dynamic
             create-k8s-test-resources: true
-          - k3s-channel: v1.24
-            test: upgrade
-            upgrade-from: dev
-            upgrade-from-extra-args: >-
-              --set proxy.secretToken=aaaa1111
-              --set hub.db.type=sqlite-pvc
-              --set singleuser.storage.type=dynamic
-            local-chart-extra-args: >-
-              --set hub.db.type=sqlite-pvc
-              --set singleuser.storage.type=dynamic
+          # v1.24はEOLとなっており、利用想定がないのでテストを除外する
+          # - k3s-channel: v1.24
+          #   test: upgrade
+          #   upgrade-from: dev
+          #   upgrade-from-extra-args: >-
+          #     --set proxy.secretToken=aaaa1111
+          #     --set hub.db.type=sqlite-pvc
+          #     --set singleuser.storage.type=dynamic
+          #   local-chart-extra-args: >-
+          #     --set hub.db.type=sqlite-pvc
+          #     --set singleuser.storage.type=dynamic
           # RCOSのリポジトリにjupyterhub chart version 2.0.0がないため、テストを除外する
           # - k3s-channel: v1.23
           #   test: upgrade
