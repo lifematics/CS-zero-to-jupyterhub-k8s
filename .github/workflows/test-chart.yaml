@@ -365,7 +365,10 @@ jobs:
         with:
           timeout: 150
           max-restarts: 1
-          workloads: "ds,deploy,sts,rollout"
+
+      - name: "Sleep 60sec to await hub"
+        run: |
+          sleep 60
 
       - name: "Sleep 60sec to await hub"
         run: |
