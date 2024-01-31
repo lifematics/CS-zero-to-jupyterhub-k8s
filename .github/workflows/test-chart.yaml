@@ -145,7 +145,6 @@ jobs:
               --set hub.cookieSecret=bbbb2222
               --set hub.config.CryptKeeper.keys[0]=cccc3333
             create-k8s-test-resources: true
-
           # We run three upgrade tests where we first install an already released
           # Helm chart version and then upgrade to the version we are now
           # testing:
