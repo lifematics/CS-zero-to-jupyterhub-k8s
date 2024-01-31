@@ -382,6 +382,7 @@ if get_config("schedulableNotebook.enabled", False):
         },
     )
 
+c.JupyterHub.load_roles = []
 
 # jupyterhub-idle-culler's permissions are scoped to what it needs only, see
 # https://github.com/jupyterhub/jupyterhub-idle-culler#permissions.
