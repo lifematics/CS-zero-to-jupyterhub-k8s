@@ -134,7 +134,7 @@ jobs:
           - k3s-channel: stable # also test hub-slim, and prePuller.hook
             test: install
             local-chart-extra-args: >-
-              --set hub.image.name=quay.io/jupyterhub/k8s-hub-slim
+              --set hub.image.name=gcr.io/nii-ap-ops/k8s-hub
               --set prePuller.hook.enabled=true
               --set prePuller.hook.pullOnlyOnChanges=true
           - k3s-channel: v1.26 # also test hub.existingSecret
@@ -242,7 +242,7 @@ jobs:
           helm install pebble --repo https://hub.jupyter.org/helm-chart/ pebble --values dev-config-pebble.yaml
 
       # Install CRD for Argo Rollouts
-      - name: Install Argo Aollouts
+      - name: Install Argo Rollouts
         run: |
           kubectl create namespace argo-rollouts
           kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
