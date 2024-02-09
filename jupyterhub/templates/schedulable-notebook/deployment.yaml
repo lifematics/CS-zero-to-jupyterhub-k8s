@@ -31,7 +31,7 @@ spec:
           persistentVolumeClaim:
             claimName: schedulable-notebook-home
       securityContext:
-        fsGroup: {{ .Values.hub.fsGid }}
+        fsGroup: {{ .Values.hub.podSecurityContext.fsGroup }}
         fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - command:
