@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -78,7 +78,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -231,7 +231,7 @@ jobs:
           traefik-enabled: false
           docker-enabled: true
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -270,7 +270,7 @@ jobs:
       # jupyterhub and the autohttps pod is about to start, so for CI
       # performance we delayed this until now and did other things in between.
       - name: Await local ACME server
-        uses: jupyterhub/action-k8s-await-workloads@v2
+        uses: jupyterhub/action-k8s-await-workloads@v3
         with:
           timeout: 150
           max-restarts: 1
@@ -336,7 +336,7 @@ jobs:
 
       - name: "(Upgrade) Await ${{ matrix.upgrade-from }} chart"
         if: matrix.test == 'upgrade'
-        uses: jupyterhub/action-k8s-await-workloads@v2
+        uses: jupyterhub/action-k8s-await-workloads@v3
         with:
           timeout: 150
           max-restarts: 1
@@ -361,7 +361,7 @@ jobs:
               ${{ matrix.local-chart-extra-args }}
 
       - name: "Await local chart"
-        uses: jupyterhub/action-k8s-await-workloads@v2
+        uses: jupyterhub/action-k8s-await-workloads@v3
         with:
           timeout: 150
           max-restarts: 1

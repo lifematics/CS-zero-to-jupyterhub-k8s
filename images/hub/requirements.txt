@@ -4,24 +4,24 @@
 #
 #    Use the "Run workflow" button at https://github.com/jupyterhub/zero-to-jupyterhub-k8s/actions/workflows/watch-dependencies.yaml
 #
-aiohttp==3.9.1
+aiohttp==3.9.3
     # via kubernetes-asyncio
 aiosignal==1.3.1
     # via aiohttp
-alembic==1.12.1
+alembic==1.13.1
     # via jupyterhub
 async-generator==1.10
     # via jupyterhub
-attrs==23.1.0
+attrs==23.2.0
     # via
     #   aiohttp
     #   jsonschema
     #   referencing
-bcrypt==4.0.1
+bcrypt==4.1.2
     # via
     #   jupyterhub-firstuseauthenticator
     #   jupyterhub-nativeauthenticator
-certifi==2023.11.17
+certifi==2024.2.2
     # via
     #   kubernetes-asyncio
     #   requests
@@ -31,7 +31,7 @@ cffi==1.16.0
     # via cryptography
 charset-normalizer==3.3.2
     # via requests
-cryptography==41.0.5
+cryptography==42.0.5
     # via
     #   pyjwt
     #   pyopenssl
@@ -39,25 +39,25 @@ escapism==1.0.1
     # via
     #   jupyterhub-kubespawner
     #   jupyterhub-ltiauthenticator
-frozenlist==1.4.0
+frozenlist==1.4.1
     # via
     #   aiohttp
     #   aiosignal
-greenlet==3.0.1
+greenlet==3.0.3
     # via sqlalchemy
 idna==3.6
     # via
     #   requests
     #   yarl
-jinja2==3.1.2
+jinja2==3.1.3
     # via
     #   jupyterhub
     #   jupyterhub-kubespawner
-jsonschema==4.20.0
+jsonschema==4.21.1
     # via
     #   jupyter-telemetry
     #   oauthenticator
-jsonschema-specifications==2023.11.1
+jsonschema-specifications==2023.12.1
     # via jsonschema
 jupyter-telemetry==0.1.0
     # via jupyterhub
@@ -75,13 +75,13 @@ jupyterhub-firstuseauthenticator==1.0.0
     # via -r requirements.in
 jupyterhub-hmacauthenticator==1.0
     # via -r requirements.in
-jupyterhub-idle-culler==1.2.1
+jupyterhub-idle-culler==1.3.1
     # via -r requirements.in
 jupyterhub-kubespawner==5.0.0
     # via -r requirements.in
 jupyterhub-ldapauthenticator==1.3.2
     # via -r requirements.in
-jupyterhub-ltiauthenticator==1.6.1
+jupyterhub-ltiauthenticator==1.6.2
     # via -r requirements.in
 jupyterhub-nativeauthenticator==1.2.0
     # via -r requirements.in
@@ -91,17 +91,17 @@ git+https://github.com/RCOSDP/CS-jhub_remote_user_authenticator.git
     # via -r requirements.in
 git+https://github.com/RCOSDP/CS-jhub_sendgrid_notifier.git
     # via -r requirements.in
-kubernetes-asyncio==28.2.1
+kubernetes-asyncio==29.0.0
     # via jupyterhub-kubespawner
 ldap3==2.9.1
     # via jupyterhub-ldapauthenticator
-mako==1.3.0
+mako==1.3.2
     # via alembic
-markupsafe==2.1.3
+markupsafe==2.1.5
     # via
     #   jinja2
     #   mako
-multidict==6.0.4
+multidict==6.0.5
     # via
     #   aiohttp
     #   yarl
@@ -109,7 +109,7 @@ mwoauth==0.4.0
     # via -r requirements.in
 nullauthenticator==1.0.0
     # via -r requirements.in
-oauthenticator==16.2.1
+oauthenticator==16.3.0
     # via -r requirements.in
 oauthlib==3.2.2
     # via
@@ -119,43 +119,46 @@ oauthlib==3.2.2
     #   requests-oauthlib
 onetimepass==1.0.1
     # via jupyterhub-nativeauthenticator
-packaging==23.2
-    # via jupyterhub
+packaging==24.0
+    # via
+    #   jupyterhub
+    #   jupyterhub-idle-culler
 pamela==1.1.0
     # via jupyterhub
-prometheus-client==0.19.0
+prometheus-client==0.20.0
     # via jupyterhub
 psycopg2==2.9.9
     # via -r requirements.in
-pyasn1==0.5.1
+pyasn1==0.6.0
     # via ldap3
-pycparser==2.21
+pycparser==2.22
     # via cffi
-pycurl==7.45.2
+pycurl==7.45.3
     # via -r requirements.in
 pyjwt[crypto]==2.8.0
     # via
     #   -r requirements.in
     #   jupyterhub-ltiauthenticator
     #   mwoauth
+    #   oauthenticator
 pymysql==1.1.0
     # via -r requirements.in
-pyopenssl==23.3.0
+pyopenssl==24.1.0
     # via certipy
-python-dateutil==2.8.2
+python-dateutil==2.9.0.post0
     # via
     #   jupyterhub
     #   jupyterhub-idle-culler
     #   kubernetes-asyncio
 python-json-logger==2.0.7
     # via jupyter-telemetry
-python-slugify==8.0.1
+python-slugify==8.0.4
     # via jupyterhub-kubespawner
 pyyaml==6.0.1
     # via
     #   jupyterhub-kubespawner
     #   kubernetes-asyncio
-referencing==0.31.0
+referencing==0.34.0
     # via
     #   jsonschema
     #   jsonschema-specifications
@@ -165,13 +168,13 @@ requests==2.31.0
     #   mwoauth
     #   oauthenticator
     #   requests-oauthlib
-requests-oauthlib==1.3.1
+requests-oauthlib==2.0.0
     # via mwoauth
-rpds-py==0.13.1
+rpds-py==0.18.0
     # via
     #   jsonschema
     #   referencing
-ruamel-yaml==0.18.5
+ruamel-yaml==0.18.6
     # via
     #   jupyter-telemetry
     #   oauthenticator
@@ -182,24 +185,24 @@ six==1.16.0
     #   kubernetes-asyncio
     #   onetimepass
     #   python-dateutil
-sqlalchemy==2.0.23
+sqlalchemy==2.0.29
     # via
     #   alembic
     #   jupyterhub
     #   sqlalchemy-cockroachdb
-sqlalchemy-cockroachdb==2.0.1
+sqlalchemy-cockroachdb==2.0.2
     # via -r requirements.in
 statsd==4.0.1
     # via -r requirements.in
 text-unidecode==1.3
     # via python-slugify
-tornado==6.3.3
+tornado==6.4
     # via
     #   jupyterhub
     #   jupyterhub-idle-culler
     #   jupyterhub-ldapauthenticator
     #   oauthenticator
-traitlets==5.13.0
+traitlets==5.14.2
     # via
     #   jupyter-telemetry
     #   jupyterhub
@@ -207,16 +210,16 @@ traitlets==5.13.0
     #   jupyterhub-ldapauthenticator
     #   jupyterhub-ltiauthenticator
     #   oauthenticator
-typing-extensions==4.8.0
+typing-extensions==4.10.0
     # via
     #   alembic
     #   sqlalchemy
-urllib3==2.1.0
+urllib3==2.2.1
     # via
     #   jupyterhub-kubespawner
     #   kubernetes-asyncio
     #   requests
-yarl==1.9.3
+yarl==1.9.4
     # via aiohttp
 
 # The following packages are considered to be unsafe in a requirements file:
