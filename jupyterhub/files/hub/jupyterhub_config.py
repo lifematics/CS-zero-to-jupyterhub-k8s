@@ -106,6 +106,10 @@ c.JupyterHub.hub_connect_url = (
     f'http://{get_name("hub")}:{get_name_env("hub", "_SERVICE_PORT")}'
 )
 
+env_url = os.environ.get("HUB_CONNECT_URL")
+if env_url:
+    c.JupyterHub.hub_connect_url = env_url
+
 # implement common labels
 # This mimics the jupyterhub.commonLabels helper, but declares managed-by to
 # kubespawner instead of helm.
@@ -179,6 +183,29 @@ for trait, cfg_key in (
     if cfg_key is None:
         cfg_key = camelCaseify(trait)
     set_config_if_not_none(c.KubeSpawner, trait, "singleuser." + cfg_key)
+
+c.KubeSpawner.extra_containers.append(
+    {
+        "image": "lmeval/network_output_exporter",
+        "imagePullPolicy": "Always",
+        "name": "network-output-exporter",
+        "env": [{"name": "NOE_CAPTURE_INTERNAL", "value": "true"}],
+        "ports": [
+            {
+                "containerPort": 9000,
+                "protocol": "TCP",
+            }
+        ],
+    }
+)
+
+c.KubeSpawner.extra_annotations.update(
+    {
+        "prometheus.io/scrape": "true",
+        "prometheus.io/path": "/",
+        "prometheus.io/port": "9000",
+    }
+)
 
 image = get_config("singleuser.image.name")
 if image:
@@ -362,6 +389,27 @@ c.KubeSpawner.volumes = volumes
 c.KubeSpawner.volume_mounts = volume_mounts
 
 c.JupyterHub.services = []
+
+
+if get_config("usersExporter.enabled", False):
+    c.JupyterHub.services.append(
+        {
+            "name": "users-exporter",
+            "admin": True,
+            "api_token": get_secret_value("hub.services.users-exporter.apiToken"),
+        }
+    )
+
+if get_config("schedulableNotebook.enabled", False):
+    c.JupyterHub.services.append(
+        {
+            "name": "schedulable-notebook",
+            "admin": True,
+            "url": "http://schedulable-notebook:8888",
+            "api_token": get_secret_value("hub.services.schedulable-notebook.apiToken"),
+        },
+    )
+
 c.JupyterHub.load_roles = []
 
 # jupyterhub-idle-culler's permissions are scoped to what it needs only, see

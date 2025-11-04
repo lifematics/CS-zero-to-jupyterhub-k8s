@@ -32,6 +32,8 @@ imagePullSecrets: []
 # the proxy pod.
 hub:
   revisionHistoryLimit:
+  rollout:
+    autoPromotionEnabled: true
   config:
     JupyterHub:
       admin_access: true
@@ -54,14 +56,6 @@ hub:
   concurrentSpawnLimit: 64
   consecutiveFailureLimit: 5
   activeServerLimit:
-  deploymentStrategy:
-    ## type: Recreate
-    ## - sqlite-pvc backed hubs require the Recreate deployment strategy as a
-    ##   typical PVC storage can only be bound to one pod at the time.
-    ## - JupyterHub isn't designed to support being run in parallell. More work
-    ##   needs to be done in JupyterHub itself for a fully highly available (HA)
-    ##   deployment of JupyterHub on k8s is to be possible.
-    type: Recreate
   db:
     type: sqlite-pvc
     upgrade:
@@ -86,7 +80,7 @@ hub:
   extraVolumes: []
   extraVolumeMounts: []
   image:
-    name: quay.io/jupyterhub/k8s-hub
+    name: gcr.io/nii-ap-ops/k8s-hub
     tag: "set-by-chartpress"
     pullPolicy:
     pullSecrets: []
@@ -156,6 +150,51 @@ hub:
 
 rbac:
   create: true
+
+grafana:
+  apiKey: ""
+  internalHost: "http://grafana.internal"
+  externalHost: "http://grafana.external"
+
+usersExporter:
+  enabled: true
+  secretToken: ""
+  image:
+    name: lmeval/jupyterhub_users_exporter
+    tag: latest
+  imagePullPolicy: Always
+
+googleCloudServiceAccount:
+  json: ""
+googleCloudStorage:
+  bucket: ""
+
+schedulableNotebook:
+  enabled: true
+  secretToken: ""
+  image:
+    name: lmeval/schedulable_notebook
+    tag: latest
+  imagePullPolicy: Always
+  slack:
+    apiURL: ""
+    apiToken: ""
+    channel: ""
+  prometheus:
+    host: "localhost"
+    port: "9090"
+    snapshotPath: "/data/snapshots"
+    podNamespace: ""
+    container: "prometheus-server"
+    deployment: "prometheus-server"
+  timezone: UTC
+  protocol: "https"
+  home:
+    storage: 1Gi
+    storageClassName: topology-aware-standard
+  jenkins:
+    storage: 1Gi
+    storageClassName: topology-aware-standard
 
 # proxy relates to the proxy pod, the proxy-public service, and the autohttps
 # pod and proxy-http service.
@@ -330,7 +369,7 @@ proxy:
       seccompProfile:
         type: "RuntimeDefault"
     image:
-      name: quay.io/jupyterhub/k8s-secret-sync
+      name: gcr.io/nii-ap-ops/k8s-secret-sync
       tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []
@@ -370,7 +409,7 @@ singleuser:
     preferred: []
   networkTools:
     image:
-      name: quay.io/jupyterhub/k8s-network-tools
+      name: gcr.io/nii-ap-ops/k8s-network-tools
       tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []
@@ -423,7 +462,7 @@ singleuser:
       storageAccessModes: [ReadWriteOnce]
       subPath:
   image:
-    name: quay.io/jupyterhub/k8s-singleuser-sample
+    name: gcr.io/nii-ap-ops/k8s-singleuser-sample
     tag: "set-by-chartpress"
     pullPolicy:
     pullSecrets: []
@@ -653,7 +692,7 @@ prePuller:
     pullOnlyOnChanges: true
     # image and the configuration below relates to the hook-image-awaiter Job
     image:
-      name: quay.io/jupyterhub/k8s-image-awaiter
+      name: gcr.io/nii-ap-ops/k8s-image-awaiter
       tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []

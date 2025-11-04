@@ -128,14 +128,14 @@ jobs:
         # k3s-channel: https://update.k3s.io/v1-release/channels
         #
         include:
-          - k3s-channel: latest
+          - k3s-channel: v1.29.0+k3s1
             test: install
             # Also test arm64
             os: ubuntu-24.04-arm
           - k3s-channel: stable # also test hub-slim, and prePuller.hook
             test: install
             local-chart-extra-args: >-
-              --set hub.image.name=quay.io/jupyterhub/k8s-hub-slim
+              --set hub.image.name=gcr.io/nii-ap-ops/k8s-hub
               --set prePuller.hook.enabled=true
               --set prePuller.hook.pullOnlyOnChanges=true
             os: ubuntu-24.04
@@ -252,6 +252,12 @@ jobs:
         run: |
           helm install pebble --repo https://hub.jupyter.org/helm-chart/ pebble --values dev-config-pebble.yaml
 
+      # Install CRD for Argo Rollouts
+      - name: Install Argo Rollouts
+        run: |
+          kubectl create namespace argo-rollouts
+          kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+
       # Build our images if needed and update values.yaml with the tags
       - name: Install and run chartpress
         run: |
@@ -296,9 +302,9 @@ jobs:
           cd ci
 
           if [ ${{ matrix.upgrade-from }} = stable ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://hub.jupyter.org/helm-chart/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --repo=https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub | yq e '.version' -)
           elif [ ${{ matrix.upgrade-from }} = dev ]; then
-            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://hub.jupyter.org/helm-chart/ jupyterhub | yq e '.version' -)
+            UPGRADE_FROM_VERSION=$(helm show chart --devel --repo=https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub | yq e '.version' -)
           else
             UPGRADE_FROM_VERSION=${{ matrix.upgrade-from }}
           fi
@@ -307,7 +313,7 @@ jobs:
           echo ""
           echo "Installing already released jupyterhub version $UPGRADE_FROM_VERSION"
 
-          helm install jupyterhub --repo https://hub.jupyter.org/helm-chart/ jupyterhub --values ../dev-config.yaml --version=$UPGRADE_FROM_VERSION ${{ matrix.upgrade-from-extra-args }}
+          helm install jupyterhub --repo https://rcosdp.github.io/CS-jhub-helm-chart/ jupyterhub --values ../dev-config.yaml --version=$UPGRADE_FROM_VERSION ${{ matrix.upgrade-from-extra-args }}
 
       - name: "(Upgrade) Install helm diff"
         if: matrix.test == 'upgrade'
@@ -370,6 +376,10 @@ jobs:
           timeout: 150
           max-restarts: 1
 
+      - name: "Sleep 60sec to await hub"
+        run: |
+          sleep 60
+
       - name: Await local chart cert acquisition
         run: |
           . ./ci/common
@@ -383,14 +393,14 @@ jobs:
             export CI_SUBDOMAIN_HOST=jupyterhub.example.org
           fi
           # If you have problems with the tests add '--capture=no' to show stdout
-          pytest --verbose --maxfail=2 --color=yes ./tests
+          pytest --verbose --maxfail=2 --color=yes --capture=no ./tests
 
       # ref: https://github.com/jupyterhub/action-k8s-namespace-report
       - name: Kubernetes namespace report
         uses: jupyterhub/action-k8s-namespace-report@v1
         if: always()
         with:
-          important-workloads: deploy/hub deploy/proxy
+          important-workloads: deploy/proxy
 
       - name: Debug PostgreSQL logs on failure
         if: failure() && matrix.setup-postgresql-args
