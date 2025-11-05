@@ -147,7 +147,7 @@ def test_extra_files(extra_files_test_command):
         [
             "kubectl",
             "exec",
-            "deploy/hub",
+            "svc/hub",
             "--",
             "sh",
             "-c",
@@ -169,7 +169,7 @@ def test_load_etc_jupyterhub_d():
         [
             "kubectl",
             "exec",
-            "deploy/hub",
+            "svc/hub",
             "--",
             "sh",
             "-c",
@@ -208,7 +208,7 @@ def test_load_existing_secret():
         [
             "kubectl",
             "logs",
-            "deploy/hub",
+            "svc/hub",
         ],
         text=True,
         stdout=subprocess.PIPE,
@@ -220,7 +220,7 @@ def test_load_existing_secret():
         print(f"Return code: {c.returncode}")
         print("---")
         print(hub_logs)
-        raise AssertionError("Logs from deploy/hub not accessible!")
+        raise AssertionError("Logs from svc/hub not accessible!")
 
     # error on missing hub.extraConfig entry
     assert (

@@ -75,9 +75,6 @@ hub:
       - IPv4
   baseUrl: /
   activeServerLimit: 3
-  deploymentStrategy:
-    type: Recreate
-    rollingUpdate:
   labels: &labels
     mock-label1-key: mock-label1-value
     mock-label2-key: mock-label2-value
@@ -342,6 +339,12 @@ proxy:
       key: "mock-key"
       crt: "mock-crt"
     hosts: [domain.com]
+
+schedulableNotebook:
+  secretToken: daad2e18301c37a14d0f6818b17283bbccc6c9637b652983dc5cfd538aba3326 # dummy
+
+usersExporter:
+  secretToken: daad2e18301c37a14d0f6818b17283bbccc6c9637b652983dc5cfd538aba3326 # dummy
 
 singleuser:
   profileList:
