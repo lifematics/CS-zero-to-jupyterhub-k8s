@@ -23,18 +23,16 @@ ARG PIP_CACHE_DIR=/tmp/pip-cache
 RUN apt-get update && apt-get install -y nodejs npm
 RUN npm install --global yarn
 RUN --mount=type=cache,target=${PIP_CACHE_DIR} \
-    pip install --upgrade pip \
-    pip install build \
- && pip wheel \
-        --wheel-dir=/tmp/wheels \
-        # pycurl 7.45.3 has wheels, but they aren't portable
-        # https://github.com/pycurl/pycurl/issues/834
-        --no-binary pycurl \
-        -r requirements.txt \
-        # Additional wheels for default-stage. Updates below should be repeated
-        # in default-stage.
-        #
-        py-spy
+    pip wheel \
+    --wheel-dir=/tmp/wheels \
+    # pycurl 7.45.3 has wheels, but they aren't portable
+    # https://github.com/pycurl/pycurl/issues/834
+    --no-binary pycurl \
+    -r requirements.txt \
+    # Additional wheels for default-stage. Updates below should be repeated
+    # in default-stage.
+    #
+    py-spy
 
 
 # The final stage - slim version
@@ -49,34 +47,34 @@ ARG NB_USER=jovyan \
     NB_UID=1000 \
     HOME=/home/jovyan
 RUN adduser \
-        --disabled-password \
-        --gecos "Default user" \
-        --uid ${NB_UID} \
-        --home ${HOME} \
-        --force-badname \
-        ${NB_USER}
+    --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    --home ${HOME} \
+    --force-badname \
+    ${NB_USER}
 
 RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
-        # requirement for pycurl
-        libcurl4 \
-        # requirement for using postgres database
-        libpq5 \
-        # requirement for using a local sqlite database
-        sqlite3 \
-        tini \
-        git \
-        curl \
-        gpg \
-        npm \
- && rm -rf /var/lib/apt/lists/*
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+    # requirement for pycurl
+    libcurl4 \
+    # requirement for using postgres database
+    libpq5 \
+    # requirement for using a local sqlite database
+    sqlite3 \
+    tini \
+    git \
+    curl \
+    gpg \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
 
 # install wheels built in the build stage
 # --no-index ensures _only_ wheels from the build stage are installed
 COPY requirements.txt /tmp/requirements.txt
 
-RUN mkdir -m -p 0755 /etc/apt/keyrings
+RUN mkdir -m 0755 /etc/apt/keyrings
 RUN apt-get update
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 RUN chmod a+r /etc/apt/keyrings/nodesource.gpg
@@ -92,9 +90,9 @@ ARG PIP_CACHE_DIR=/tmp/pip-cache
 RUN --mount=type=cache,target=${PIP_CACHE_DIR} \
     --mount=type=cache,from=build-stage,source=/tmp/wheels,target=/tmp/wheels \
     pip install \
-        --no-index \
-        --find-links=/tmp/wheels/ \
-        -r /tmp/requirements.txt
+    --no-index \
+    --find-links=/tmp/wheels/ \
+    -r /tmp/requirements.txt
 
 WORKDIR /srv/jupyterhub
 RUN chown ${NB_USER}:${NB_USER} /srv/jupyterhub
@@ -118,20 +116,20 @@ ARG PIP_CACHE_DIR=/tmp/pip-cache
 RUN --mount=type=cache,target=${PIP_CACHE_DIR} \
     --mount=type=cache,from=build-stage,source=/tmp/wheels,target=/tmp/wheels \
     pip install \
-        --no-index \
-        --find-links=/tmp/wheels/ \
-        # Updates below should be repeated in build-stage.
-        #
-        # py-spy is useful for profiling performance of running hubs
-        py-spy
+    --no-index \
+    --find-links=/tmp/wheels/ \
+    # Updates below should be repeated in build-stage.
+    #
+    # py-spy is useful for profiling performance of running hubs
+    py-spy
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-        curl \
-        dnsutils \
-        git \
-        less \
-        vim \
- && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y --no-install-recommends \
+    curl \
+    dnsutils \
+    git \
+    less \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_USER}
