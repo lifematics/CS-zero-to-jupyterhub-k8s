@@ -189,7 +189,7 @@ jobs:
           #   local-chart-extra-args: >-
           #     --set hub.db.type=sqlite-pvc
           #     --set singleuser.storage.type=dynamic
-            os: ubuntu-24.04
+          # os: ubuntu-24.04
           # RCOSのリポジトリにjupyterhub chart version 2.0.0がないため、テストを除外する
           # - k3s-channel: v1.28
           #   test: upgrade
@@ -220,8 +220,8 @@ jobs:
           #     --set audit.logConnections=true
           #     --set audit.logDisconnections=true
           #     --set audit.clientMinMessages=debug
-              --set image.repository=bitnamilegacy/postgresql
-            os: ubuntu-24.04
+          #   --set image.repository=bitnamilegacy/postgresql
+          # os: ubuntu-24.04
 
     runs-on: ${{ matrix.os }}
 
