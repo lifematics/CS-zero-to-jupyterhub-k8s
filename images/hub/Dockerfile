@@ -29,6 +29,7 @@ RUN --mount=type=cache,target=${PIP_CACHE_DIR} \
     # https://github.com/pycurl/pycurl/issues/834
     --no-binary pycurl \
     -r requirements.txt \
+    setuptools-scm \
     # Additional wheels for default-stage. Updates below should be repeated
     # in default-stage.
     #
