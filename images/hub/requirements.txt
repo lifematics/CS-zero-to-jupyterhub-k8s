@@ -277,3 +277,4 @@ webcolors==24.11.1
     # via jsonschema
 yarl==1.22.0
     # via aiohttp
+setuptools>=61
