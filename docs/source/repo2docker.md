@@ -30,8 +30,7 @@ example if you include a `requirements.txt` file in the root level of the
 repository, `repo2docker` will `pip install` the specified packages into the
 Docker image to be built.
 
-See [repo2docker's documentation](https://repo2docker.readthedocs.io/en/latest/config_files.html) for more
-details.
+See [repo2docker's documentation](https://repo2docker.readthedocs.io/en/latest/howto/configuration.html) for more details.
 
 Below we’ll cover how to use `repo2docker` to generate a Docker image and how
 to configure JupyterHub to build off of this image:
