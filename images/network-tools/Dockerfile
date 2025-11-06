@@ -11,6 +11,6 @@ FROM alpine:3.18
 
 # Use iptables-legacy as workaround.
 # cf. https://github.com/tailscale/tailscale/issues/10540
-RUN apk add --no-cache ca-certificates iptables iptables-legacy
-RUN rm /sbin/iptables && ln -s /sbin/iptables-legacy /sbin/iptables
-RUN rm /sbin/ip6tables && ln -s /sbin/ip6tables-legacy /sbin/ip6tables
+RUN apk add --no-cache ca-certificates iptables
+RUN update-alternatives --set iptables /usr/sbin/iptables-legacy || true
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy || true
