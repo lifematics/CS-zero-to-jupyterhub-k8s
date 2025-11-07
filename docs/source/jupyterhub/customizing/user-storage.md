@@ -149,7 +149,7 @@ Replace `<your-cluster-zone>` with the Zone in which you created your cluster (y
 this with `gcloud container clusters list`).
 
 Next, create this object by running `kubectl apply -f storageclass.yaml`
-from the commandline. The [Kubernetes Docs](https://kubernetes.io/docs/concepts/storage/storage-classes#the-storageclass-resource)
+from the commandline. The [Kubernetes Docs](https://kubernetes.io/docs/concepts/storage/storage-classes/)
 have more information on what the various fields mean. The most important field is `parameters.type`,
 which specifies the type of storage you wish to use. The two options are:
 
@@ -235,11 +235,15 @@ pods:
 singleuser:
   storage:
     extraVolumes:
-      - name: jupyterhub-shared
+      # Arbitrary key for identity & ordering
+      1-jupyterhub-shared:
+        name: jupyterhub-shared
         persistentVolumeClaim:
           claimName: jupyterhub-shared-volume
     extraVolumeMounts:
-      - name: jupyterhub-shared
+      # Arbitrary key for identity & ordering
+      1-jupyterhub-shared:
+        name: jupyterhub-shared
         mountPath: /home/shared
 ```
 

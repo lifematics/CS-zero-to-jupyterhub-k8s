@@ -331,6 +331,12 @@ container, meaning that commands that place files relative to `./` will result
 in users seeing those files in their home directory. You can use commands like
 `wget` to place files where you like.
 
+It's also worth mentioning that Kubernetes PostStart hook is
+[executed asynchronously](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#hook-handler-execution).
+This means there is no guarantee that the hook will execute before the container
+ENTRYPOINT. This makes postStart hook unusable if some initialization must complete
+before the user server start. For these cases a [custom command](#set-cmd) may be used.
+
 A simple way to populate the notebook user's home directory is to add the
 required files to the container's `/tmp` directory and then copy them to
 `/home/jovyan` using a `postStart` hook. This example shows the use of
@@ -494,7 +500,7 @@ singleuser:
                   gitpuller https://github.com/data-8/materials-fa17 master materials-fa;
 ```
 
-This allows users to select from three profiles, each with their own
+This allows users to select from four profiles, each with their own
 environment (defined by each Docker image in the configuration above).
 
 The "Learning Data Science" environment in the above example overrides the postStart lifecycle hook. Note that when

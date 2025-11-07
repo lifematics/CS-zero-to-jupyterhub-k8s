@@ -12,6 +12,381 @@ changes in pull requests], this list should be updated.
 [development releases]: https://hub.jupyter.org/helm-chart/#development-releases-jupyterhub
 [breaking changes in pull requests]: https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pulls?q=is%3Apr+is%3Aclosed+label%3Abreaking
 
+## 4.3
+
+### 4.3.1 - 2025-10-17
+
+With this smaller release, the JupyterHub version deployed is upgraded from
+v5.4.0 to v5.4.1. For details refer to the [JupyterHub changelog].
+
+### 4.3.0 - 2025-10-07
+
+This release comes with some new chart configuration options and notable updated
+dependencies.
+
+#### Notable dependencies updated
+
+| Dependency                                                                       | Version in 4.2.0 | Version in 4.3.0 | Changelog link                                                                            | Note                               |
+| -------------------------------------------------------------------------------- | ---------------- | ---------------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
+| [jupyterhub](https://github.com/jupyterhub/jupyterhub)                           | 5.3.0            | 5.4.0            | [Changelog](https://jupyterhub.readthedocs.io/en/stable/reference/changelog.html)         | Run in the `hub` pod               |
+| [configurable-http-proxy](https://github.com/jupyterhub/configurable-http-proxy) | 4.6.3            | 5.1.0            | [Changelog](https://github.com/jupyterhub/configurable-http-proxy/blob/HEAD/CHANGELOG.md) | Run in the `proxy` pod             |
+| [traefik](https://github.com/traefik/traefik)                                    | v3.3.5           | v3.5.3           | [Changelog](https://github.com/traefik/traefik/blob/HEAD/CHANGELOG.md)                    | Run in the `autohttps` pod         |
+| [kube-scheduler](https://github.com/kubernetes/kube-scheduler)                   | v1.30.11         | v1.30.14         | [Changelog](https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG)               | Run in the `user-scheduler` pod(s) |
+
+#### New features added
+
+- Support dict values for volumes, volume_mounts and other list based configs that support dict values [#3690](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3690) ([@sunu](https://github.com/sunu), [@GeorgianaElena](https://github.com/GeorgianaElena), [@agoose77](https://github.com/agoose77))
+- Add `proxy.service.externalIPs` config [#3683](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3683) ([@holzman](https://github.com/holzman), [@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- Add `prePuller.[hook|continuous].daemonsetAnnotations` config [#3682](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3682) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics), [@paololazzari](https://github.com/paololazzari))
+- Add support for K8S Gateway API (`httpRoute` config) [#3661](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3661) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- Add config for k8s Services' `ipFamilies` and `ipFamilyPolicy` [#3485](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3485) ([@mike-matera](https://github.com/mike-matera), [@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+
+#### Enhancements made
+
+- raise on invalid top-level keys in hub.config [#3721](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3721) ([@minrk](https://github.com/minrk), [@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio), [@agoose77](https://github.com/agoose77))
+- Declare k8s Services ipFamilyPolicy to PreferDualStack, previously implicit SingleStack [#3685](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3685) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- Update jupyterhub/configurable-http-proxy version from 4.6.3 to 5.0.0 [#3677](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3677) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+#### Maintenance and upkeep improvements
+
+- Let `proxy.service.[ipFamilies|ipFamilyPolicy]` affect the `proxy-api` Service also [#3688](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3688) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+
+#### Documentation improvements
+
+- Docs: Fix link formatting [#3717](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3717) ([@Paul2708](https://github.com/Paul2708), [@yuvipanda](https://github.com/yuvipanda), [@rgaiacs](https://github.com/rgaiacs))
+- documentation update on postStart hook use [#3573](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3573) ([@k-popov](https://github.com/k-popov), [@consideRatio](https://github.com/consideRatio))
+
+#### Continuous integration improvements
+
+- test-chart.yaml: use docker.io/bitnamilegacy/postgresql [#3747](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3747) ([@manics](https://github.com/manics), [@rgaiacs](https://github.com/rgaiacs))
+- Bump aquasecurity/trivy-action from 0.32.0 to 0.33.1 [#3742](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3742) ([@consideRatio](https://github.com/consideRatio))
+- Bump actions/github-script from 7 to 8 [#3741](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3741) ([@consideRatio](https://github.com/consideRatio))
+- Bump actions/checkout from 4 to 5 [#3740](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3740) ([@consideRatio](https://github.com/consideRatio))
+- Bump actions/setup-python from 5 to 6 [#3739](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3739) ([@consideRatio](https://github.com/consideRatio))
+- Bump aquasecurity/trivy-action from 0.31.0 to 0.32.0 [#3720](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3720) ([@consideRatio](https://github.com/consideRatio))
+- Pre commit fixes: switch to supported mirrors-prettier, workaround beautysh bug [#3705](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3705) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- Bump aquasecurity/trivy-action from 26d71e622b84d103f86fb33a5a42c558e11f4ae0 to 76071ef0d7ec797419534a183b498b4d6366cf37 [#3704](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3704) ([@manics](https://github.com/manics))
+- Bump aquasecurity/trivy-action from 0.24.0 to 0.30.0 [#3584](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3584) ([@consideRatio](https://github.com/consideRatio))
+
+#### Other merged PRs
+
+This changelog entry omits automated PRs, for example those updating
+dependencies in: images, github actions, pre-commit hooks. For a full list of
+changes, see the [full comparison](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/compare/4.2.0...4.3.0).
+
+#### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/graphs/contributors?from=2025-04-16&to=2025-10-07&type=c))
+
+@agoose77 ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aagoose77+updated%3A2025-04-16..2025-10-07&type=Issues)) | @consideRatio ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AconsideRatio+updated%3A2025-04-16..2025-10-07&type=Issues)) | @GeorgianaElena ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AGeorgianaElena+updated%3A2025-04-16..2025-10-07&type=Issues)) | @holzman ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aholzman+updated%3A2025-04-16..2025-10-07&type=Issues)) | @jupyterhub-bot ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajupyterhub-bot+updated%3A2025-04-16..2025-10-07&type=Issues)) | @k-popov ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ak-popov+updated%3A2025-04-16..2025-10-07&type=Issues)) | @manics ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amanics+updated%3A2025-04-16..2025-10-07&type=Issues)) | @mike-matera ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amike-matera+updated%3A2025-04-16..2025-10-07&type=Issues)) | @minrk ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aminrk+updated%3A2025-04-16..2025-10-07&type=Issues)) | @paololazzari ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Apaololazzari+updated%3A2025-04-16..2025-10-07&type=Issues)) | @Paul2708 ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3APaul2708+updated%3A2025-04-16..2025-10-07&type=Issues)) | @rgaiacs ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Argaiacs+updated%3A2025-04-16..2025-10-07&type=Issues)) | @sunu ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asunu+updated%3A2025-04-16..2025-10-07&type=Issues)) | @tadeha ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Atadeha+updated%3A2025-04-16..2025-10-07&type=Issues)) | @yuvipanda ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ayuvipanda+updated%3A2025-04-16..2025-10-07&type=Issues))
+
+## 4.2
+
+### 4.2.0 - 2025-04-16
+
+With this smaller release, the JupyterHub version deployed is upgraded from
+v5.2.1 to v5.3.0. For details refer to the [JupyterHub changelog].
+
+#### Enhancements made
+
+- Add pullPolicy to pre-pulled extraImages [#3621](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3621) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+
+#### Maintenance and upkeep improvements
+
+- Replace deprecated `pipes.quote` with `shlex.quote` [#3655](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3655) ([@emmanuel-ferdman](https://github.com/emmanuel-ferdman), [@consideRatio](https://github.com/consideRatio))
+
+#### Documentation improvements
+
+- Linkcheck: update ignored and permanently redirected external URLs [#3654](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3654) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- Replace gitter with zulip [#3637](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3637) ([@manics](https://github.com/manics), [@yuvipanda](https://github.com/yuvipanda))
+- docs(prometheus): Document how to set up scraping in kubernetes [#3616](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3616) ([@gardleopard](https://github.com/gardleopard), [@GeorgianaElena](https://github.com/GeorgianaElena), [@sgibson91](https://github.com/sgibson91))
+- Add page about Docker Desktop to documentation [#3611](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3611) ([@rgaiacs](https://github.com/rgaiacs), [@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+
+#### Continuous integration improvements
+
+- ci: update watch dependencies workflow to function again [#3651](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3651) ([@consideRatio](https://github.com/consideRatio))
+- Use GitHub hosted Ubuntu arm64 runners instead of CircleCI [#3605](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3605) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- Switch GitHub CI and readthedocs to Ubuntu 24.04 [#3604](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3604) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+
+#### Other merged PRs
+
+This changelog entry omits automated PRs, for example those updating
+dependencies in: images, github actions, pre-commit hooks. For a full list of
+changes, see the [full comparison](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/compare/4.1.0...4.2.0).
+
+#### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/graphs/contributors?from=2025-01-15&to=2025-04-16&type=c))
+
+@benz0li ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Abenz0li+updated%3A2025-01-15..2025-04-16&type=Issues)) | @consideRatio ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AconsideRatio+updated%3A2025-01-15..2025-04-16&type=Issues)) | @emmanuel-ferdman ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aemmanuel-ferdman+updated%3A2025-01-15..2025-04-16&type=Issues)) | @gardleopard ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Agardleopard+updated%3A2025-01-15..2025-04-16&type=Issues)) | @GeorgianaElena ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AGeorgianaElena+updated%3A2025-01-15..2025-04-16&type=Issues)) | @jupyterhub-bot ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajupyterhub-bot+updated%3A2025-01-15..2025-04-16&type=Issues)) | @Khoi16 ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AKhoi16+updated%3A2025-01-15..2025-04-16&type=Issues)) | @manics ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amanics+updated%3A2025-01-15..2025-04-16&type=Issues)) | @minrk ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aminrk+updated%3A2025-01-15..2025-04-16&type=Issues)) | @rgaiacs ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Argaiacs+updated%3A2025-01-15..2025-04-16&type=Issues)) | @samyuh ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asamyuh+updated%3A2025-01-15..2025-04-16&type=Issues)) | @sgibson91 ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asgibson91+updated%3A2025-01-15..2025-04-16&type=Issues)) | @yuvipanda ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ayuvipanda+updated%3A2025-01-15..2025-04-16&type=Issues))
+
+## 4.1
+
+### 4.1.0 - 2025-01-15
+
+#### New features added
+
+- Add dummy service accounts to hook-image-puller and continuous-image-puller pods [#3594](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3594) ([@samyuh](https://github.com/samyuh), [@consideRatio](https://github.com/consideRatio))
+- Support extra pod spec for user placeholder pods [#3590](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3590) ([@jshmchenxi](https://github.com/jshmchenxi), [@consideRatio](https://github.com/consideRatio))
+
+#### Bugs fixed
+
+- Add modern labels to pods controlled by deployments etc. [#3596](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3596) ([@samyuh](https://github.com/samyuh), [@consideRatio](https://github.com/consideRatio))
+
+#### Documentation improvements
+
+- Update Keycloak example (currently broken) [#3571](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3571) ([@manics](https://github.com/manics), [@minrk](https://github.com/minrk), [@consideRatio](https://github.com/consideRatio))
+
+#### Other merged PRs
+
+This changelog entry omits automated PRs, for example those updating
+dependencies in: images, github actions, pre-commit hooks. For a full list of
+changes, see the [full comparison](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/compare/4.0.0...4.1.0).
+
+#### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/graphs/contributors?from=2024-11-07&to=2025-01-12&type=c))
+
+@aychang95 ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aaychang95+updated%3A2024-11-07..2025-01-12&type=Issues)) | @consideRatio ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AconsideRatio+updated%3A2024-11-07..2025-01-12&type=Issues)) | @jshmchenxi ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajshmchenxi+updated%3A2024-11-07..2025-01-12&type=Issues)) | @jupyterhub-bot ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajupyterhub-bot+updated%3A2024-11-07..2025-01-12&type=Issues)) | @manics ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amanics+updated%3A2024-11-07..2025-01-12&type=Issues)) | @minrk ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aminrk+updated%3A2024-11-07..2025-01-12&type=Issues)) | @samyuh ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asamyuh+updated%3A2024-11-07..2025-01-12&type=Issues))
+
+## 4.0
+
+(changelog-4.0)=
+
+### 4.0.0 - 2024-11-07
+
+This release updates JupyterHub itself from version 4 to 5, and the dependencies
+`jupyterhub-kubespawner`, `oauthenticator`, and `ldapauthenticator` to a new
+major version.
+
+:::{seealso}
+
+- the [general upgrade documentation](upgrading-major-upgrades) for upgrade steps to take every time you do a major chart update
+- the [upgrade guide](upgrade-3-to-4) for specific instructions for upgrading chart version from 3 to 4
+- check the summary of breaking changes and the linked changelogs below
+  if you use any of the upgraded packages.
+
+:::
+
+#### Breaking changes
+
+- The chart now require Kubernetes 1.28+, up from 1.23+
+- Python is upgraded in chart images from 3.11 to 3.12
+- KubeSpawner is upgraded from 6.2.0 to 7.0.0
+  - Refer to the [KubeSpawner changelog] for details and pay attention to the
+    entries for KubeSpawner version 7.0.0.
+- JupyterHub 4.1.6 has been upgraded to 5.2.1
+  - Refer to the [JupyterHub changelog] for details and pay attention to the
+    entries for JupyterHub version 5.0.0.
+- OAuthenticator 16.3.1 has been upgraded to 17.1.0
+  - If you are using an OAuthenticator based authenticator class
+    (GitHubOAuthenticator, GoogleOAuthenticator, ...), refer to the
+    [OAuthenticator changelog] for details and pay attention to the entries for
+    JupyterHub version 17.0.0.
+- LDAPAuthenticator 1.3.2 has been upgraded to 2.0.2
+  - If you are using this authenticator class, refer to the [LDAPAuthenticator
+    changelog] for details and pay attention to the entries for
+    LDAPAuthenticator version 2.0.0.
+
+[ldapauthenticator changelog]: https://github.com/jupyterhub/ldapauthenticator/blob/HEAD/CHANGELOG.md
+
+#### Notable dependencies updated
+
+| Dependency                                                                       | Version in 3.3.8 | Version in 4.0.0 | Changelog link                                                                            | Note                               |
+| -------------------------------------------------------------------------------- | ---------------- | ---------------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
+| [jupyterhub](https://github.com/jupyterhub/jupyterhub)                           | 4.1.6            | 5.2.1            | [Changelog](https://jupyterhub.readthedocs.io/en/stable/reference/changelog.html)         | Run in the `hub` pod               |
+| [kubespawner](https://github.com/jupyterhub/kubespawner)                         | 6.2.0            | 7.0.0            | [Changelog](https://jupyterhub-kubespawner.readthedocs.io/en/stable/changelog.html)       | Run in the `hub` pod               |
+| [oauthenticator](https://github.com/jupyterhub/oauthenticator)                   | 16.3.1           | 17.1.0           | [Changelog](https://oauthenticator.readthedocs.io/en/stable/reference/changelog.html)     | Run in the `hub` pod               |
+| [ldapauthenticator](https://github.com/jupyterhub/ldapauthenticator)             | 1.3.2            | 2.0.2            | [Changelog](https://github.com/jupyterhub/ldapauthenticator/blob/HEAD/CHANGELOG.md)       | Run in the `hub` pod               |
+| [nativeauthenticator](https://github.com/jupyterhub/nativeauthenticator)         | 1.2.0            | 1.3.0            | [Changelog](https://github.com/jupyterhub/nativeauthenticator/blob/HEAD/CHANGELOG.md)     | Run in the `hub` pod               |
+| [jupyterhub-idle-culler](https://github.com/jupyterhub/jupyterhub-idle-culler)   | 1.3.1            | 1.4.0            | [Changelog](https://github.com/jupyterhub/jupyterhub-idle-culler/blob/main/CHANGELOG.md)  | Run in the `hub` pod               |
+| [configurable-http-proxy](https://github.com/jupyterhub/configurable-http-proxy) | 4.6.1            | 4.6.2            | [Changelog](https://github.com/jupyterhub/configurable-http-proxy/blob/HEAD/CHANGELOG.md) | Run in the `proxy` pod             |
+| [traefik](https://github.com/traefik/traefik)                                    | v2.11.0          | v3.2.0           | [Changelog](https://github.com/traefik/traefik/blob/HEAD/CHANGELOG.md)                    | Run in the `autohttps` pod         |
+| [kube-scheduler](https://github.com/kubernetes/kube-scheduler)                   | v1.26.15         | v1.30.6          | [Changelog](https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG)               | Run in the `user-scheduler` pod(s) |
+
+For a detailed list of Python dependencies in the `hub` Pod's Docker image,
+inspect the [images/hub/requirements.txt] file and use its git history to see
+what changes between tagged versions.
+
+#### New features added
+
+- Support subdomain_host (CHP needs --host-routing) [#3548](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3548) ([@manics](https://github.com/manics), [@minrk](https://github.com/minrk), [@consideRatio](https://github.com/consideRatio))
+- add appProtocol to hub service definition [#3534](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3534) ([@colinlodter](https://github.com/colinlodter), [@consideRatio](https://github.com/consideRatio))
+- Add oauthenticator googlegroups extras and cleanup dependencies [#3523](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3523) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- Add `ingress.extraPaths` config [#3492](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3492) ([@alxyok](https://github.com/alxyok), [@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- Add `singleuser.storage.dynamic.subPath` config [#3468](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3468) ([@benz0li](https://github.com/benz0li), [@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- Add recommended chart labels alongside old labels (`app.kubernetes.io/...`, `helm.sh/chart`) [#3404](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3404) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+
+#### Enhancements made
+
+- Security context hardening [#3464](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3464) ([@lahwaacz](https://github.com/lahwaacz), [@manics](https://github.com/manics))
+
+#### Bugs fixed
+
+- fix default pvc mounting with kubespawner 7 [#3537](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3537) ([@minrk](https://github.com/minrk), [@consideRatio](https://github.com/consideRatio))
+
+#### Maintenance and upkeep improvements
+
+- Use python 3.12 instead of 3.11 in built images [#3526](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3526) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- user-scheduler: update kube-scheduler binary from 1.28.14 to 1.30.5 [#3514](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3514) ([@consideRatio](https://github.com/consideRatio))
+- Drop support for k8s 1.26-1.27 [#3508](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3508) ([@consideRatio](https://github.com/consideRatio))
+- Bump debian distribution for images [#3457](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3457) ([@SchutteJan](https://github.com/SchutteJan), [@manics](https://github.com/manics))
+- Bump pip-tools to v7 used by ci/refreeze script updating requirements.txt files [#3455](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3455) ([@consideRatio](https://github.com/consideRatio))
+- Ensure hub container is first by appending instead of prepending hub.extraContainers [#3546](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3546) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+
+#### Documentation improvements
+
+- Add backdated upgrade guide for 2 to 3 [#3521](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3521) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- debugging: remove old (now misleading) example [#3487](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3487) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- RTD custom domain changes [#3461](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3461) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- docs: small fixes [#3415](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3415) ([@buti1021](https://github.com/buti1021), [@consideRatio](https://github.com/consideRatio))
+
+#### Continuous integration improvements
+
+- Pin and automate doing isolated bumps of hub image dependencies' major versions [#3565](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3565) ([@consideRatio](https://github.com/consideRatio), [@minrk](https://github.com/minrk), [@manics](https://github.com/manics))
+- remove maintenance label from autobump PRs [#3558](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3558) ([@minrk](https://github.com/minrk), [@manics](https://github.com/manics))
+- ci: Bump postgresql chart [#3554](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3554) ([@manics](https://github.com/manics), [@consideRatio](https://github.com/consideRatio))
+- ci: configure automatic bump of kube-scheduler to version 1.30.x [#3517](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3517) ([@consideRatio](https://github.com/consideRatio))
+
+#### Other merged PRs
+
+This changelog entry omits automated PRs, for example those updating
+dependencies in: images, github actions, pre-commit hooks. For a full list of
+changes, see the [full comparison](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/compare/3.3.8...4.0.0).
+
+#### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/graphs/contributors?from=2024-07-31&to=2024-11-07&type=c))
+
+@alxyok ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aalxyok+updated%3A2024-07-31..2024-11-07&type=Issues)) | @colinlodter ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Acolinlodter+updated%3A2024-07-31..2024-11-07&type=Issues)) | @consideRatio ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AconsideRatio+updated%3A2024-07-31..2024-11-07&type=Issues)) | @jrdnbradford ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajrdnbradford+updated%3A2024-07-31..2024-11-07&type=Issues)) | @jupyterhub-bot ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajupyterhub-bot+updated%3A2024-07-31..2024-11-07&type=Issues)) | @lahwaacz ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Alahwaacz+updated%3A2024-07-31..2024-11-07&type=Issues)) | @manics ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amanics+updated%3A2024-07-31..2024-11-07&type=Issues)) | @minrk ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aminrk+updated%3A2024-07-31..2024-11-07&type=Issues)) | @samyuh ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asamyuh+updated%3A2024-07-31..2024-11-07&type=Issues)) | @snickell ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Asnickell+updated%3A2024-07-31..2024-11-07&type=Issues)) | @StefanTheWiz ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AStefanTheWiz+updated%3A2024-07-31..2024-11-07&type=Issues))
+
+## 3.3
+
+### 3.3.8 - 2024-07-31
+
+This release updates JupyterHub from 4.1.5 to 4.1.6, which is a security release
+documented in [JupyterHub changelog] like this:
+
+> 4.1.6 is a **security release**, fixing [CVE-2024-41942].
+> All JupyterHub deployments are encouraged to upgrade,
+> but only those with users having the `admin:users` scope are affected.
+> The [full advisory][CVE-2024-41942] will be published 7 days after the release.
+
+[CVE-2024-41942]: https://github.com/jupyterhub/jupyterhub/security/advisories/GHSA-9x4q-3gxw-849f
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.5 to 4.1.6 [#3471](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3471) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.7 - 2024-04-09
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.4 to 4.1.5 [#3390](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3390) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.6 - 2024-03-30
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.3 to 4.1.4 [#3384](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3384) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.5 - 2024-03-26
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.2 to 4.1.3 [#3381](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3381) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.4 - 2024-03-25
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.1 to 4.1.2 [#3378](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3378) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.3 - 2024-03-23
+
+#### Maintenance and upkeep improvements
+
+- Update jupyterhub from 4.1.0 to 4.1.1 [#3375](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3375) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+- unpin pycurl [#3371](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3371) ([@minrk](https://github.com/minrk), [@consideRatio](https://github.com/consideRatio))
+
+### 3.3.2 - 2024-03-20
+
+#### Bugs fixed
+
+- network-tools image: pin alpine 3.18 for legacy iptables [#3369](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3369) ([@consideRatio](https://github.com/consideRatio))
+
+### 3.3.1 - 2024-03-20
+
+#### Bugs fixed
+
+- hub image: downgrade to use pycurl with functional wheel [#3365](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3365) ([@consideRatio](https://github.com/consideRatio))
+
+### 3.3.0 - 2024-03-20
+
+```{admonition} If you are upgrading from 3.0.x
+:class: warning
+
+A bug in KubeSpawner 5.0-6.0 present in z2jh 3.0.0-3.0.3 made user server pods
+risk be orphaned by JupyterHub, making them run indefinitely and cause
+unnecessary cloud costs.
+
+Read more about how to clean up these user server pods in [this forum post].
+```
+
+This release updates JupyterHub from 4.0.2 to 4.1.0 and OAuthenticator from
+16.2.1 to 16.3.0. Both updates provide security patches. For more information,
+see [JupyterHub's changelog] and [OAuthenticator's changelog].
+
+[JupyterHub's changelog]: https://jupyterhub.readthedocs.io/en/stable/reference/changelog.html
+
+[OAuthenticator's changelog]: https://oauthenticator.readthedocs.io/en/latest/reference/changelog.html
+
+([full changelog](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/compare/3.2.1...3.3.0))
+
+#### Bugs fixed
+
+- Fix previously ignored revisionHistoryLimit config [#3357](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3357) ([@SchutteJan](https://github.com/SchutteJan), [@consideRatio](https://github.com/consideRatio))
+
+#### Maintenance and upkeep improvements
+
+- Update oauthenticator from 16.2.1 to 16.3.0 [#3363](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3363) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+- Update jupyterhub from 4.0.2 to 4.1.0 [#3362](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3362) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@minrk](https://github.com/minrk))
+- Remove additional comma in compare-values-schema-content.py [#3350](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3350) ([@ya0guang](https://github.com/ya0guang), [@consideRatio](https://github.com/consideRatio))
+- Update kube-scheduler version from v1.26.11 to v1.26.15 [#3301](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3301),[#3312](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3312),[#3324](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3324),[#3344](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3344),[#3359](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3359),[d83ae04b](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/commit/d83ae04b5111cf2968d07f0f38db082589e28cd3) ([@consideRatio](https://github.com/consideRatio), [@jupyterhub-bot](https://github.com/jupyterhub-bot), [@manics](https://github.com/manics))
+- Update library/traefik version from v2.10.5 to v2.11.0 [#3283](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3283),[#3295](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3295),[#3343](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3343) ([@jupyterhub-bot](https://github.com/jupyterhub-bot), [@consideRatio](https://github.com/consideRatio))
+
+#### Documentation improvements
+
+- Fix documented example for proxy.chp.extraCommandLineFlags [#3337](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3337) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+- docs: fix storageclass link's anchor [#3322](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3322) ([@consideRatio](https://github.com/consideRatio))
+- update openshift documentation [#3273](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3273) ([@WilliamHoltam](https://github.com/WilliamHoltam), [@manics](https://github.com/manics))
+
+#### Continuous integration improvements
+
+- ci: update kube-scheduler binary's minor version to bump [#3323](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3323) ([@consideRatio](https://github.com/consideRatio))
+- ci: update circleci workflow for arm64, test with latest k3s [#3313](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/3313) ([@consideRatio](https://github.com/consideRatio), [@manics](https://github.com/manics))
+
+#### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/graphs/contributors?from=2023-11-27&to=2024-03-20&type=c))
+
+@consideRatio ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AconsideRatio+updated%3A2023-11-27..2024-03-20&type=Issues)) | @jupyterhub-bot ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ajupyterhub-bot+updated%3A2023-11-27..2024-03-20&type=Issues)) | @Kyrremann ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AKyrremann+updated%3A2023-11-27..2024-03-20&type=Issues)) | @manics ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Amanics+updated%3A2023-11-27..2024-03-20&type=Issues)) | @minrk ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aminrk+updated%3A2023-11-27..2024-03-20&type=Issues)) | @SchutteJan ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3ASchutteJan+updated%3A2023-11-27..2024-03-20&type=Issues)) | @StefanVanDyck ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AStefanVanDyck+updated%3A2023-11-27..2024-03-20&type=Issues)) | @WilliamHoltam ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3AWilliamHoltam+updated%3A2023-11-27..2024-03-20&type=Issues)) | @ya0guang ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Aya0guang+updated%3A2023-11-27..2024-03-20&type=Issues)) | @yuvipanda ([activity](https://github.com/search?q=repo%3Ajupyterhub%2Fzero-to-jupyterhub-k8s+involves%3Ayuvipanda+updated%3A2023-11-27..2024-03-20&type=Issues))
+
 ## 3.2
 
 ### 3.2.1 - 2023-11-27
@@ -22,7 +397,9 @@ changes in pull requests], this list should be updated.
 
 ### 3.2.0 - 2023-11-27
 
-```{warning} If you are upgrading from 3.0.x
+```{admonition} If you are upgrading from 3.0.x
+:class: warning
+
 A bug in KubeSpawner 5.0-6.0 present in z2jh 3.0.0-3.0.3 made user server pods
 risk be orphaned by JupyterHub, making them run indefinitely and cause
 unnecessary cloud costs.
@@ -81,15 +458,17 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 
 ### 3.1.0 - 2023-09-29
 
-```{warning} Post-upgrade action recommended
+```{admonition} Post-upgrade action recommended
+:class: warning
+
 A bug in KubeSpawner 5.0-6.0 present in z2jh 3.0.0-3.0.3 made user server pods
 risk be orphaned by JupyterHub, making them run indefinitely and cause
 unnecessary cloud costs.
 
 Read more about how to clean up these user server pods in [this forum post].
+```
 
 [this forum post]: https://discourse.jupyter.org/t/how-to-cleanup-orphaned-user-pods-after-bug-in-z2jh-3-0-and-kubespawner-6-0/21677
-```
 
 #### Notable dependencies updated
 
@@ -166,7 +545,9 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 This release updates JupyterHub itself and several dependencies to a new major
 version, please read the breaking changes below before upgrading.
 
-```{warning} Breaking changes since beta releases
+```{admonition} Breaking changes since beta releases
+:class: warning
+
 Since 3.0.0-beta.1 OAuthenticator was upgraded, and since 3.0.0-beta.3 default
 networking rules related to establishing connections to DNS ports changed
 slightly.
@@ -771,7 +1152,6 @@ and small bugfixes will increment the three version numbers.
   you if you don't specify them.
 
 - **Smoother helm upgrades**
-
   - `prePuller.hook.pullOnlyOnChanges` is now available and enabled by default,
     which only intercepts a `helm upgrade` by pulling images if they have
     changed since the last upgrade.
@@ -821,7 +1201,6 @@ followed these instructions between `0.7.0-beta.1` and `0.11.1`, please see the
   cluster.
 
   The most common validation errors are:
-
   - _Unrecognized config values_
 
     For example if you have misspelled something.
@@ -1156,7 +1535,6 @@ For a detailed list of how Python dependencies have change in the `hub` Pod's Do
 - dep: bump kube-scheduler from 1.19.2 to 1.19.7 [#1981](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1981) ([@consideRatio](https://github.com/consideRatio))
 - singleuser-sample image: bump jupyerhub to 1.3.0 [#1961](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1961) ([@consideRatio](https://github.com/consideRatio))
 - build(deps): bump jupyterhub from 1.2.2 to 1.3.0 in /images/hub [#1959](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1959) ([@dependabot](https://github.com/dependabot))
-- Vulnerability patch in network-tools [#1947](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1947) ([@github-actions](https://github.com/github-actions))
 - hub image: bump jupyterhub-kubespawner from 0.14.1 to 0.15.0 in /images/hub [#1946](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1946) ([@dependabot](https://github.com/dependabot))
 - Helm template linting - remove extra space [#1945](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1945) ([@DArtagan](https://github.com/DArtagan))
 - hub image: bump jupyterhub-hmacauthenticator from 0.1 to 1.0 in /images/hub [#1944](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/pull/1944) ([@dependabot](https://github.com/dependabot))
@@ -3839,7 +4217,6 @@ Deployer UX fixes.
 - No need to restart hub manually after some changes - it is
   automatically restarted now. You can disable an automatic
   restart of hub after an upgrade with the following:
-
   1. Finding out the current helm release's revision
   2. Adding '--set revisionOverride=<current-revision>' to your
      upgrade command.

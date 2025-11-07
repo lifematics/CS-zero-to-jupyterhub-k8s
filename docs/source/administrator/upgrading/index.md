@@ -11,7 +11,7 @@ then follow [](helm-upgrade-command).
 Major releases may contain breaking changes, and will often require changes to your configuration.
 They have dedicated instructions for upgrading your deployment in addition to the general instructions on this page.
 
-For additional help, feel free to reach out to us on [gitter](https://gitter.im/jupyterhub/jupyterhub)
+For additional help, feel free to reach out to us on [Zulip](https://jupyter.zulipchat.com/#narrow/channel/469744-jupyterhub)
 or the [Discourse forum](https://discourse.jupyter.org/).
 
 (upgrading-major-upgrades)=
@@ -22,6 +22,8 @@ or the [Discourse forum](https://discourse.jupyter.org/).
 :maxdepth: 1
 :caption: Major releases guides
 
+upgrade-3-to-4
+upgrade-2-to-3
 upgrade-1-to-2
 ```
 
