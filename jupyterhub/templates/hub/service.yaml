@@ -19,9 +19,6 @@ metadata:
     {{- end }}
 spec:
   type: {{ .Values.hub.service.type }}
-  {{- with .Values.hub.service.loadBalancerIP }}
-  loadBalancerIP: {{ . }}
-  {{- end }}
   selector:
     {{- include "jupyterhub.matchLabels" . | nindent 4 }}
   ports:
@@ -30,6 +27,9 @@ spec:
       targetPort: http
       {{- with .Values.hub.service.ports.nodePort }}
       nodePort: {{ . }}
+      {{- end }}
+      {{- with .Values.hub.service.ports.appProtocol }}
+      appProtocol: {{ . }}
       {{- end }}
     - name: users-exporter
       protocol: TCP
@@ -71,3 +71,13 @@ spec:
     {{- with .Values.hub.service.extraPorts }}
     {{- . | toYaml | nindent 4 }}
     {{- end }}
+  {{- with .Values.hub.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- with .Values.hub.service.ipFamilyPolicy }}
+  ipFamilyPolicy: {{ . }}
+  {{- end }}
+  {{- with .Values.hub.service.ipFamilies }}
+  ipFamilies:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}

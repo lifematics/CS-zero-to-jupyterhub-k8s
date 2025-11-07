@@ -38,6 +38,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # ref: https://myst-parser.readthedocs.io/en/latest/configuration.html
 #
 myst_enable_extensions = [
+    "colon_fence",
     "substitution",
 ]
 
@@ -205,6 +206,14 @@ html_context = {
 }
 
 
+# -- Readthedocs specific configuration -------------------------------------------
+# ref: https://about.readthedocs.com/blog/2024/07/addons-by-default/
+#
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")
+if os.environ.get("READTHEDOCS", "") == "True":
+    html_context["READTHEDOCS"] = True
+
+
 # -- Options for linkcheck builder -------------------------------------------
 # ref: https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-linkcheck-builder
 #
@@ -222,10 +231,14 @@ linkcheck_ignore = [
     "https://portal.azure.com",  # sign-in redirect noise
     "https://console.cloud.google.com",  # sign-in redirect noise
     "https://console.developers.google.com",  # sign-in redirect noise
+    "https://www.espncricinfo.com/cricketers/hamid-hassan-311427",  # CI: 403 Client Error: Forbidden for url
+    "https://kccncna17.sched.com/event/CU6z/hacking-and-hardening-kubernetes-clusters-by-example-i-brad-geesaman-symantec",  # CI: 500 Server Error: Internal Server Error for url
 ]
 linkcheck_anchors_ignore = [
     "/#!",
     "/#%21",
+    # https://jupyter.zulipchat.com/#narrow/channel/469744-jupyterhub
+    "^narrow/channel/469744-jupyterhub$",
 ]
 
 

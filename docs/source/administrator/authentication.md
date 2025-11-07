@@ -404,9 +404,9 @@ OAuthenticator project and reference that instead of maintaining similar
 documentation in this project also.
 ```
 
-[OpenID Connect](https://openid.net/connect) is an identity layer on top of the
+[OpenID Connect](https://openid.net/developers/how-connect-works/) is an identity layer on top of the
 OAuth 2.0 protocol, implemented by [various servers and
-services](https://openid.net/certified-open-id-developer-tools/). While OpenID
+services](https://openid.net/developers/certified-openid-connect-implementations/). While OpenID
 Connect endpoint discovery is not supported by oauthentiator, you can still
 configure JupyterHub to authenticate with OpenID Connect providers by specifying
 all endpoints in the GenericOAuthenticator class.
@@ -444,11 +444,9 @@ hub:
       username_claim: preferred_username
       userdata_params:
         state: state
-      # In order to use keycloak client's roles as authorization layer
-      claim_groups_key: roles
-      allowed_groups:
-        - user
-      admin_groups:
+      # Allow all Keycloak users
+      allow_all: true
+      admin_users:
         - admin
     JupyterHub:
       authenticator_class: generic-oauth

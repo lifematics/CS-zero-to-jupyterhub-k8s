@@ -21,15 +21,15 @@
 repos:
   # Autoformat: Python code, syntax patterns are modernized
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+    rev: v3.21.0
     hooks:
       - id: pyupgrade
         args:
           - --py38-plus
 
   # Autoformat: Python code
-  - repo: https://github.com/psf/black
-    rev: 23.10.1
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 25.9.0
     hooks:
       - id: black
         args:
@@ -41,7 +41,7 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 7.0.0
     hooks:
       - id: isort
         args:
@@ -49,30 +49,36 @@ repos:
 
   # Autoformat: Bash scripts
   - repo: https://github.com/lovesegfault/beautysh
-    rev: v6.2.1
+    rev: v6.4.1
     hooks:
       - id: beautysh
+        additional_dependencies:
+          # On recent Python versions beautysh fails with
+          #   ModuleNotFoundError: No module named 'pkg_resources'
+          # This can be removed if https://github.com/lovesegfault/beautysh/pull/251
+          # is released
+          - setuptools
 
   # Autoformat: markdown, yaml (but not helm templates)
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.3
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.6.2
     hooks:
       - id: prettier
 
   # Reset Chart.yaml version and values.yaml image tags
   - repo: https://github.com/jupyterhub/chartpress
-    rev: 2.1.0
+    rev: 2.3.0
     hooks:
       - id: chartpress
 
   # Linting: Python code (see the file .flake8)
   - repo: https://github.com/PyCQA/flake8
-    rev: "6.1.0"
+    rev: "7.3.0"
     hooks:
       - id: flake8
 
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.22
+    rev: v0.1.30
     hooks:
       # This requires shellcheck to be installed manually so is disabled by default
       - id: shellcheck
