@@ -205,7 +205,6 @@ jobs:
             setup-postgresql-args: >-
               --version=16.0.5
               --set image.repository=bitnamilegacy/postgresql
-              --set image.tag=16.0.5-debian-12-r0
               --set auth.enablePostgresUser=true
               --set auth.postgresPassword=postgres
               --set auth.database=jupyterhub
