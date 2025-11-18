@@ -79,7 +79,7 @@ hub:
   extraVolumeMounts: []
   image:
     name: gcr.io/nii-ap-ops/k8s-hub
-    tag: "4.1.0-20251118.2"
+    tag: "set-by-chartpress"
     pullPolicy:
     pullSecrets: []
   resources: {}
@@ -367,7 +367,7 @@ proxy:
         type: "RuntimeDefault"
     image:
       name: gcr.io/nii-ap-ops/k8s-secret-sync
-      tag: "4.1.0-20251118.2"
+      tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -407,7 +407,7 @@ singleuser:
   networkTools:
     image:
       name: gcr.io/nii-ap-ops/k8s-network-tools
-      tag: "4.1.0-20251118.2"
+      tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -460,7 +460,7 @@ singleuser:
       subPath:
   image:
     name: gcr.io/nii-ap-ops/k8s-singleuser-sample
-    tag: "4.1.0-20251118.2"
+    tag: "set-by-chartpress"
     pullPolicy:
     pullSecrets: []
   startTimeout: 300
@@ -690,7 +690,7 @@ prePuller:
     # image and the configuration below relates to the hook-image-awaiter Job
     image:
       name: gcr.io/nii-ap-ops/k8s-image-awaiter
-      tag: "4.1.0-20251118.2"
+      tag: "set-by-chartpress"
       pullPolicy:
       pullSecrets: []
     containerSecurityContext:
