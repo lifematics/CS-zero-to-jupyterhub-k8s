@@ -79,7 +79,7 @@ hub:
   extraVolumeMounts: []
   image:
     name: gcr.io/nii-ap-ops/k8s-hub
-    tag: "set-by-chartpress"
+    tag: "4.1.0-20251118.2"
     pullPolicy:
     pullSecrets: []
   resources: {}
@@ -161,6 +161,8 @@ usersExporter:
     name: lmeval/jupyterhub_users_exporter
     tag: latest
   imagePullPolicy: Always
+  securityContext:
+    runAsNonRoot: false
 
 googleCloudServiceAccount:
   json: ""
@@ -365,7 +367,7 @@ proxy:
         type: "RuntimeDefault"
     image:
       name: gcr.io/nii-ap-ops/k8s-secret-sync
-      tag: "set-by-chartpress"
+      tag: "4.1.0-20251118.2"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -405,7 +407,7 @@ singleuser:
   networkTools:
     image:
       name: gcr.io/nii-ap-ops/k8s-network-tools
-      tag: "set-by-chartpress"
+      tag: "4.1.0-20251118.2"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -458,7 +460,7 @@ singleuser:
       subPath:
   image:
     name: gcr.io/nii-ap-ops/k8s-singleuser-sample
-    tag: "set-by-chartpress"
+    tag: "4.1.0-20251118.2"
     pullPolicy:
     pullSecrets: []
   startTimeout: 300
@@ -688,7 +690,7 @@ prePuller:
     # image and the configuration below relates to the hook-image-awaiter Job
     image:
       name: gcr.io/nii-ap-ops/k8s-image-awaiter
-      tag: "set-by-chartpress"
+      tag: "4.1.0-20251118.2"
       pullPolicy:
       pullSecrets: []
     containerSecurityContext:

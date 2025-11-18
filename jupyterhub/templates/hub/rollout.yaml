@@ -110,6 +110,10 @@ spec:
           {{- with .Values.usersExporter.image.pullPolicy }}
           imagePullPolicy: {{ . }}
           {{- end }}
+          {{- with .Values.usersExporter.securityContext }}
+          securityContext:
+            {{- . | toYaml | nindent 12 }}
+          {{- end }}
           ports:
           - containerPort: 9000
             protocol: TCP
