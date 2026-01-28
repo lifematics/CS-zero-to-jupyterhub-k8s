@@ -161,6 +161,8 @@ usersExporter:
     name: lmeval/jupyterhub_users_exporter
     tag: latest
   imagePullPolicy: Always
+  securityContext:
+    runAsNonRoot: false
 
 googleCloudServiceAccount:
   json: ""
