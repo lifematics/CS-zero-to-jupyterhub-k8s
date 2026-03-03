@@ -1039,6 +1039,7 @@ and small bugfixes will increment the three version numbers.
   you if you don't specify them.
 
 - **Smoother helm upgrades**
+
   - `prePuller.hook.pullOnlyOnChanges` is now available and enabled by default,
     which only intercepts a `helm upgrade` by pulling images if they have
     changed since the last upgrade.
@@ -1088,6 +1089,7 @@ followed these instructions between `0.7.0-beta.1` and `0.11.1`, please see the
   cluster.
 
   The most common validation errors are:
+
   - _Unrecognized config values_
 
     For example if you have misspelled something.
@@ -4104,6 +4106,7 @@ Deployer UX fixes.
 - No need to restart hub manually after some changes - it is
   automatically restarted now. You can disable an automatic
   restart of hub after an upgrade with the following:
+
   1. Finding out the current helm release's revision
   2. Adding '--set revisionOverride=<current-revision>' to your
      upgrade command.
