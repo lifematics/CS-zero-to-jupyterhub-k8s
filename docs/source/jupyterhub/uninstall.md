@@ -66,6 +66,7 @@ before doing the cloud provider specific setup.
    has been deleted.
 
    At a minimum, check the following under the Hamburger (left top corner) menu:
+
    1. Compute -> Compute Engine -> Disks
    2. Compute -> Kubernetes Engine -> Clusters
    3. Tools -> Container Registry -> Images
