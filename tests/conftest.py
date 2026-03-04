@@ -1,4 +1,4 @@
-"""conftest.py has a special meaning to pytest
+"""conftest.py has a special meaning to pytest for test
 
 ref: https://docs.pytest.org/en/latest/writing_plugins.html#conftest-py-plugins
 """
